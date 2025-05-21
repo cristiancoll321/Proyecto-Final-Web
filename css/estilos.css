@@ -1,0 +1,342 @@
+/*Estilos generales*/
+:root {
+--primary-color: #4f46e5;
+--secondary-color: #8b5cf6;
+--accent-color: #ec4899;
+--background-light: #f9fafb;
+--background-dark: #111827;
+--shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
+--shadow-md: 0 10px 15px rgba(0, 0, 0, 0.1);
+--shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.15);
+--border-radius: 16px;
+--transition-normal: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+--transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/*Animacion para el boton del carrito*/
+@keyframes pulse-glow {
+0% {
+box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.7);
+transform: scale(1);
+}
+50% {
+box-shadow: 0 0 0 10px rgba(79, 70, 229, 0);
+transform: scale(1.05);
+}
+100% {
+box-shadow: 0 0 0 0 rgba(79, 70, 229, 0);
+transform: scale(1);
+}
+}
+
+/* Animacion para añadir al carrito */
+@keyframes float-up {
+0% {
+opacity: 0;
+transform: translateY(10px);
+}
+50% {
+opacity: 1;
+transform: translateY(-15px);
+}
+100% {
+opacity: 0;
+transform: translateY(-30px);
+}
+}
+
+/* Animacion para tarjetas de producto*/
+@keyframes levitate {
+0% {
+transform: translateY(0);
+}
+50% {
+transform: translateY(-8px);
+}
+100% {
+transform: translateY(0);
+}
+}
+
+/*Animacion para cargar imagenes*/
+@keyframes fade-in {
+0% {
+opacity: 0;
+filter: blur(5px);
+}
+100% {
+opacity: 1;
+filter: blur(0);
+}
+}
+
+/*Animacion para el Toast*/
+@keyframes slide-in {
+0% {
+transform: translateX(100%);
+opacity: 0;
+}
+10% {
+transform: translateX(-5%);
+opacity: 1;
+}
+90% {
+transform: translateX(-5%);
+opacity: 1;
+}
+100% {
+transform: translateX(110%);
+opacity: 0;
+}
+}
+
+/*Tarjetas de producto*/
+.product-card {
+position: relative;
+min-height: 100%;
+background: linear-gradient(145deg, #ffffff, #f5f7fa);
+border-radius: var(--border-radius);
+box-shadow: var(--shadow-sm);
+padding: 1.5rem;
+transition: var(--transition-normal);
+overflow: hidden;
+z-index: 1;
+}
+
+.product-card:before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+transform: translateX(-100%);
+transition: var(--transition-normal);
+z-index: -1;
+}
+
+.product-card:hover {
+transform: translateY(-5px);
+box-shadow: var(--shadow-lg);
+}
+
+.product-card:hover:before {
+transform: translateX(100%);
+transition: transform 1s;
+}
+
+.product-card:hover .product-img {
+animation: levitate 3s infinite ease-in-out;
+}
+
+/* Imagenes de producto con carga suave*/
+.product-img {
+width: 100%;
+height: 220px;
+object-fit: contain;
+border-radius: calc(var(--border-radius) - 4px);
+background: var(--background-light);
+margin-bottom: 1.2rem;
+transition: var(--transition-normal);
+animation: fade-in 0.8s ease-out;
+filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+/*Imagen modal con zoom*/
+.modal-img {
+max-height: 350px;
+object-fit: contain;
+border-radius: var(--border-radius);
+background: var(--background-light);
+transition: transform 0.5s ease;
+animation: fade-in 0.5s ease-out;
+}
+
+.modal-dialog:hover .modal-img {
+transform: scale(1.03);
+}
+
+/* Boton del carrito con efecto pulse*/
+#cartBtn {
+font-size: 1.2rem;
+font-weight: 600;
+border-radius: 50px;
+border: none;
+padding: 0.75rem 1.5rem;
+background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+color: white;
+box-shadow: var(--shadow-md);
+transition: var(--transition-bounce);
+position: relative;
+overflow: hidden;
+}
+
+#cartBtn:hover {
+transform: translateY(-2px);
+box-shadow: var(--shadow-lg);
+background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+}
+
+#cartBtn:active {
+transform: translateY(1px);
+}
+
+/*Aplicar animación cuando se añade un item*/
+.cart-pulse {
+animation: pulse-glow 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/*Toast personalizado con sliding animation*/
+#cartToast {
+font-size: 1.1rem;
+border-radius: var(--border-radius);
+background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+color: white;
+box-shadow: var(--shadow-lg);
+border-left: 5px solid var(--accent-color);
+overflow: hidden;
+animation: slide-in 4s forwards;
+}
+
+/*Floating notification para añadir al carrito*/
+.add-to-cart-notification {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+color: var(--accent-color);
+font-weight: bold;
+font-size: 1.2rem;
+pointer-events: none;
+animation: float-up 1s forwards;
+}
+
+/*Botones de categoria*/
+.category-btn {
+border-radius: 30px;
+background: var(--background-light);
+color: var(--primary-color);
+padding: 0.5rem 1.2rem;
+margin: 0.25rem;
+transition: var(--transition-normal);
+border: 1px solid rgba(79, 70, 229, 0.2);
+}
+
+.category-btn:hover, .category-btn.active {
+background: var(--primary-color);
+color: white;
+transform: translateY(-2px);
+box-shadow: var(--shadow-sm);
+}
+
+/*Precios con estilo*/
+.product-price {
+font-size: 1.5rem;
+font-weight: 700;
+color: var(--primary-color);
+background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+-webkit-background-clip: text;
+background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+
+/*Boton de añadir al carrito en las tarjetas*/
+.add-to-cart-btn {
+border-radius: 50%;
+width: 40px;
+height: 40px;
+position: absolute;
+right: 1.5rem;
+bottom: 1.5rem;
+background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+color: white;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: var(--transition-bounce);
+transform: translateY(60px);
+opacity: 0;
+}
+
+.product-card:hover .add-to-cart-btn {
+transform: translateY(0);
+opacity: 1;
+}
+
+.add-to-cart-btn:hover {
+transform: scale(1.1);
+}
+
+/*Modo oscuro*/
+@media (prefers-color-scheme: dark) {
+.product-card {
+background: linear-gradient(145deg, #1f2937, #111827);
+color: #e5e7eb;
+}
+
+.product-img, .modal-img {
+background: var(--background-dark);
+}
+
+.category-btn {
+background: var(--background-dark);
+color: #e5e7eb;
+border-color: rgba(255, 255, 255, 0.1);
+}
+
+.category-btn:hover, .category-btn.active {
+background: var(--primary-color);
+color: white;
+}
+}
+
+/*Responsive*/
+@media (max-width: 992px) {
+.product-card {
+padding: 1.2rem;
+border-radius: calc(var(--border-radius) - 4px);
+}
+
+.product-img {
+height: 180px;
+}
+
+.modal-img {
+max-height: 300px;
+}
+}
+
+@media (max-width: 576px) {
+:root {
+--border-radius: 12px;
+}
+
+.product-card {
+padding: 1rem;
+}
+
+.product-img {
+height: 140px;
+}
+
+.modal-img {
+max-height: 200px;
+}
+
+#cartBtn {
+font-size: 1rem;
+padding: 0.6rem 1.2rem;
+}
+
+.product-price {
+font-size: 1.2rem;
+}
+
+.add-to-cart-btn {
+width: 35px;
+height: 35px;
+right: 1rem;
+bottom: 1rem;
+}
+}
